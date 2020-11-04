@@ -33,6 +33,6 @@ if __name__ == "__main__":
     print(enemy_hp)
     #敌人攻击力用randit生成随机整数
     enemy_power = random.randint(190,210)
-    print(enemy_hp)
+    print(enemy_power)
     #调用函数，传入敌人的血量和攻击力
     fight(enemy_hp,enemy_power)
