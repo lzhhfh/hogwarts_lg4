@@ -33,6 +33,16 @@ if __name__ == "__main__":
     print(enemy_hp)
     #敌人攻击力用randit生成随机整数
     enemy_power = random.randint(190,210)
-    print(enemy_hp)
+    print(enemy_power)
     #调用函数，传入敌人的血量和攻击力
     fight(enemy_hp,enemy_power)
+
+    # 写一个computer(电脑)类,有operation(运行)方法,
+    # 调用时显示运行tm(运行时间为传入的数字):
+    # 再写一个游戏类E继承自Bicycle,
+    # 添加电池电量valume属性通过，参数传入, 同时有两个方法：
+    # 1. fill_charge(vol) 用来充电, vol 为电量
+    # 2. run(km) 方法用于骑行,每骑行10km消耗电量1度,
+    # 当电量消耗尽时调用Bicycle的run方法骑行，
+    # 通过传入的骑行里程数，显示骑行结果
+

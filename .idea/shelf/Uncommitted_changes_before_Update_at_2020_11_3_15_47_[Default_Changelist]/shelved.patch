@@ -1,0 +1,163 @@
+Index: test_demo.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pytest\r\nimport yaml\r\n\r\n\r\nclass TestDemo:\r\n    @pytest.mark.parametrize(\"env\",yaml.safe_load(open(\"./env.yaml\")))\r\n    def test_demo(self,env):\r\n        if \"test\" in env:\r\n            print(\"这是测试环境\")\r\n            print(\"测试环境的ip是:\",env[\"test\"])\r\n        elif \"dev\" in env:\r\n            print(\"这是开发环境\")\r\n            print(\"开发环境的ip是:\", env[\"test\"])
+===================================================================
+--- test_demo.py	(revision df4c8baf1077c8fd418209e1c7865778b015cf2e)
++++ demo/test_demo.py	(date 1604062224202)
+@@ -3,7 +3,7 @@
+ 
+ 
+ class TestDemo:
+-    @pytest.mark.parametrize("env",yaml.safe_load(open("./env.yaml")))
++    @pytest.mark.parametrize("env", yaml.safe_load(open("env.yaml")))
+     def test_demo(self,env):
+         if "test" in env:
+             print("这是测试环境")
+Index: test_pytest/tests/test_calc.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- test_pytest/tests/test_calc.py	(date 1604144441166)
++++ test_pytest/tests/test_calc.py	(date 1604144441166)
+@@ -0,0 +1,46 @@
++import pytest
++
++from test_pytest.core.calc import Calc
++
++class TestCalc:
++    def setup_class(self):
++        self.calc = Calc()
++
++    def setup(self):
++        pass
++
++    @pytest.mark.parametrize('a, b, c', [
++        [1, 2, 2],
++        [-1, -1, 1],
++        [1, -1, 1]
++    ])
++    def test_mul(self,a, b, c):
++        assert self.calc.mul(a, b) == c
++        # assert calc.mul(-1, -2) == 2
++        # assert calc.mul(1, 2) == -2
++    #正常值用例
++    @pytest.mark.parametrize('a,b,c', [
++        [2, 2, 1],
++        [0.2, 0.1, 2],
++        [0, 2, 0]
++    ])
++
++    def test_div(self,a,b,c):
++        assert self.calc.div(a,b) == c
++    #异常值用例
++    @pytest.mark.parametrize('a, b', [
++            [2, 0],
++            [0.2, 0],
++            [0, 0]
++     ])
++
++    def test_div(self, a, b):
++        with pytest.raises(Exception):
++            assert self.calc.div(a, b)
++    #主流程用例
++    def test_process(self):
++        r1 = self.calc.mul(1, 2)
++        r2 = self.calc.div(2, 1)
++        assert r1 == 2
++        assert r2 == 2
++
+Index: python_practice/game.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- python_practice/game.py	(date 1604389552165)
++++ python_practice/game.py	(date 1604389552165)
+@@ -0,0 +1,38 @@
++import random
++
++# 定义fight函数实现游戏逻辑
++def fight(enemy_hp,enemy_power):
++    my_hp = 1000
++    my_power = 200
++    # 敌人的血量和攻击力
++    print(f"敌人的血量{enemy_hp},攻击力为{enemy_power}")
++    # 加入循环，游戏进行多轮
++    while True:
++        my_hp = my_hp - enemy_power
++        enemy_hp = enemy_hp - my_power
++        #判断谁的血量小于等于0
++        if my_hp <= 0:
++            #打印自己的和敌人的剩余血量
++            print(f"我的剩余血量为{my_hp}")
++            print(f"敌人的剩余血量{enemy_hp}")
++            print("我输了")
++            break
++        elif enemy_hp <= 0:
++            print(f"我的剩余血量为{my_hp}")
++            print(f"敌人的剩余血量{enemy_hp}")
++            print("我赢了")
++            break
++
++if __name__ == "__main__":
++    # 利用列表推导式生成血量
++    hp = [x for x in range(990,1010)]
++    print(hp)
++    print(type(hp))
++    # 让敌人的血量从血量列表中随机挑选一个值
++    enemy_hp = random.choice(hp)
++    print(enemy_hp)
++    #敌人攻击力用randit生成随机整数
++    enemy_power = random.randint(190,210)
++    print(enemy_hp)
++    #调用函数，传入敌人的血量和攻击力
++    fight(enemy_hp,enemy_power)
+\ No newline at end of file
+Index: test_pytest/core/calc.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- test_pytest/core/calc.py	(date 1604142721448)
++++ test_pytest/core/calc.py	(date 1604142721448)
+@@ -0,0 +1,6 @@
++class Calc:
++
++    def div(self,a,b):
++        return a/b
++    def mul(self,a,b):
++        return a*b
+Index: test_data.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pytest\r\n\r\n# class TestData:\r\n#     @pytest.mark.parametrize((\"a\",\"b\"),[(10,20),(10,5),(3,9)])\r\n#     def test_data(self, a, b):\r\n#         print(a+b)\r\nimport yaml\r\n\r\nclass TestData:\r\n    @pytest.mark.parametrize((\"a\",\"b\"),yaml.safe_load(open(\"./data.yaml\")))\r\n    def test_data(self, a, b):\r\n        print(a+b)
+===================================================================
+--- test_data.py	(revision df4c8baf1077c8fd418209e1c7865778b015cf2e)
++++ demo/test_data.py	(date 1604062224221)
+@@ -7,6 +7,6 @@
+ import yaml
+ 
+ class TestData:
+-    @pytest.mark.parametrize(("a","b"),yaml.safe_load(open("./data.yaml")))
++    @pytest.mark.parametrize(("a","b"), yaml.safe_load(open("data.yaml")))
+     def test_data(self, a, b):
+         print(a+b)
+\ No newline at end of file
+diff --git test_pytest/tests/__init__.py test_pytest/tests/__init__.py
+new file mode 100644
+diff --git env.yaml demo/env.yaml
+rename from env.yaml
+rename to demo/env.yaml
+diff --git main.py demo/main.py
+rename from main.py
+rename to demo/main.py
+diff --git test_a.py demo/test_a.py
+rename from test_a.py
+rename to demo/test_a.py
+diff --git data.yaml demo/data.yaml
+rename from data.yaml
+rename to demo/data.yaml
+diff --git test_pytest/__init__.py test_pytest/__init__.py
+new file mode 100644
