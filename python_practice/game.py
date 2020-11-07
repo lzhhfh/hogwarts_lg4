@@ -36,6 +36,7 @@ if __name__ == "__main__":
     print(enemy_power)
     #调用函数，传入敌人的血量和攻击力
     fight(enemy_hp,enemy_power)
+<<<<<<< HEAD
 
     # 写一个computer(电脑)类,有operation(运行)方法,
     # 调用时显示运行tm(运行时间为传入的数字):
@@ -46,3 +47,5 @@ if __name__ == "__main__":
     # 当电量消耗尽时调用Bicycle的run方法骑行，
     # 通过传入的骑行里程数，显示骑行结果
 
+=======
+>>>>>>> origin/main
